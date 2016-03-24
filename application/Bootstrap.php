@@ -8,16 +8,25 @@
 
 
 class Bootstrap extends Yaf\Bootstrap_Abstract {
+    protected $config;
 
     public function _initConfig() {
-        $config = Yaf\Application::app()->getConfig();
-        Yaf\Registry::set("config", $config);
+        $this->config = Yaf\Application::app()->getConfig();
+        Yaf\Registry::set("config", $this->config);
     }
-    /*
-     * @param Yaf\Dispatcher $dispatcher
-     */
+    
+    public function _initHelper() {
+        Yaf\Loader::import(APP_PATH . '/application/helper/function.php');
+    }
+
+    public function _initSession() {
+        session_set_save_handler(new RedisSession($this->config->redis->toArray()), true);
+        Yaf\Session::getInstance()->start();
+    }
+
+
     public function _initTwig(Yaf\Dispatcher $dispatcher) {
-        $view = new TwigView(APP_PATH.'/application/views',Yaf\Registry::get("config")->get("twig")->toArray());
+        $view = new TwigView(APP_PATH.'/application/views',$this->config->twig->toArray());
         $dispatcher->setView($view);
     }
 }
