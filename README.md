@@ -2,4 +2,5 @@
 
 - model层 Medoo
 - view层 Twig
+- Redis处理session
 
