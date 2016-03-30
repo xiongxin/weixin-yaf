@@ -1,6 +1,6 @@
 ## 基于Yaf微信开发的示例
 
-- model层 Medoo
-- view层 Twig
+- Model层 (*添加一个快速的ORM框架)
+- View层 Twig
 - Redis处理session
 
